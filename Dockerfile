@@ -1,10 +1,10 @@
-FROM quay.io/upslopeio/node-alpine
+FROM quay.io/upslopeio/node-alpine:3
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm ci
+RUN npm ci --production
 
 COPY . .
 
