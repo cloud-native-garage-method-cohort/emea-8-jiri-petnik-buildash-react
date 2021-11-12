@@ -1,0 +1,42 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: buildah-react
+spec:
+  tasks:
+    - name: clone-repository
+      taskRef:
+        name: git-clone
+        kind: ClusterTask
+      workspaces:
+        - name: output
+          workspace: pipeline-shared-data
+      params:
+        - name: url
+          value: https://github.com/cloud-native-garage-method-cohort/emea-8-jiri-petnik-buildash-react
+    - name: run-tests
+      params:
+        - name: ARGS
+          value:
+            - install-ci-test
+      runAfter:
+        - clone-repository
+      taskRef:
+        name: npm
+      workspaces:
+        - name: source
+          workspace: pipeline-shared-data
+    - name: create-image
+      params:
+        - name: IMAGE
+          value: "quay.io/jpetnik/buildash-react:$(tasks.clone-repository.results.commit)"
+      runAfter:
+        - run-tests
+      taskRef:
+        name: buildah
+        kind: ClusterTask
+      workspaces:
+        - name: source
+          workspace: pipeline-shared-data
+  workspaces:
+    - name: pipeline-shared-data
