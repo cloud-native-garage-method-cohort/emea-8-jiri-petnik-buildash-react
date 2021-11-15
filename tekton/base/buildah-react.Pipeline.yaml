@@ -4,6 +4,9 @@ metadata:
   name: buildah-react
 spec:
   params:
+    - name: app-name
+      type: string
+      description: Application name
     - name: source-repo
       type: string
       description: Github source repository
@@ -42,6 +45,23 @@ spec:
       taskRef:
         name: buildah
         kind: ClusterTask
+      workspaces:
+        - name: source
+          workspace: pipeline-shared-data
+    - name: create-configuration
+      params:
+        - name: app-name
+          value: "$(params.app-name)"
+        - name: source-repo
+          value: "$(params.source-repo)"
+        - name: commit
+          value: "$(tasks.clone-repository.results.commit)"
+        - name: image-repo
+          value: "$(params.image-repo)"
+      runAfter:
+        - create-image
+      taskRef:
+        name: create-configuration
       workspaces:
         - name: source
           workspace: pipeline-shared-data
