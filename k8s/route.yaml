@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: buildash-react
+spec:
+  tls:
+    termination: edge
+  to:
+    name: buildash-react
+    kind: Service
+    weight: 100
+  wildcardPolicy: None
