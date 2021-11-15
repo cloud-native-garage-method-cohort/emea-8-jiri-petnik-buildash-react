@@ -4,6 +4,11 @@ metadata:
   generateName: buildah-react-
 spec:
   serviceAccountName: build-bot
+  params:
+    - name: source-repo
+      value: https://github.com/cloud-native-garage-method-cohort/emea-8-jiri-petnik-buildash-react
+    - name: image-repo
+      value: quay.io/jpetnik/buildash-react
   pipelineRef:
     name: buildah-react
   workspaces:

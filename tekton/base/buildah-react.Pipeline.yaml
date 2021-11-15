@@ -3,6 +3,13 @@ kind: Pipeline
 metadata:
   name: buildah-react
 spec:
+  params:
+    - name: source-repo
+      type: string
+      description: Github source repository
+    - name: image-repo
+      type: string
+      description: Docker image repository
   tasks:
     - name: clone-repository
       taskRef:
@@ -13,7 +20,7 @@ spec:
           workspace: pipeline-shared-data
       params:
         - name: url
-          value: https://github.com/cloud-native-garage-method-cohort/emea-8-jiri-petnik-buildash-react
+          value: "$(params.source-repo)"
     - name: run-tests
       params:
         - name: ARGS
@@ -29,7 +36,7 @@ spec:
     - name: create-image
       params:
         - name: IMAGE
-          value: "quay.io/jpetnik/buildash-react:$(tasks.clone-repository.results.commit)"
+          value: "$(params.image-repo):$(tasks.clone-repository.results.commit)"
       runAfter:
         - run-tests
       taskRef:
