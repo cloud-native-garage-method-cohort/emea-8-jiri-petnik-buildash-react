@@ -65,5 +65,18 @@ spec:
       workspaces:
         - name: source
           workspace: pipeline-shared-data
+    - name: deploy
+      params:
+        - name: manifest
+          value: "$(tasks.create-configuration.results.manifest)"
+        - name: app-namespace
+          value: "$(context.pipelineRun.namespace)"
+      runAfter:
+        - create-configuration
+      taskRef:
+        name: deploy
+      workspaces:
+        - name: source
+          workspace: pipeline-shared-data
   workspaces:
     - name: pipeline-shared-data
