@@ -4,13 +4,14 @@ resources:
   - deployment.yaml
   - service.yaml
   - route.yaml
-images:
-  - name: "*"
-    newName: quay.io/jpetnik/buildash-react
-    newTag: 68c6039e310dd5c0ee8f6583c87f0e1e1362cbea
-commonLabels:
-  app.kubernetes.io/instance: buildash-react
-  app.kubernetes.io/name: buildash-react
-commonAnnotations:
-  app.openshift.io/vcs-ref: 68c6039e310dd5c0ee8f6583c87f0e1e1362cbea
-  app.openshift.io/vcs-uri: https://github.com/cloud-native-garage-method-cohort/emea-8-jiri-petnik-buildash-react
+# omit manual changes to the kustomization process - pipeline task will modify this dynamically
+# images:
+#   - name: "*"
+#     newName: quay.io/jpetnik/buildash-react
+#     newTag: 68c6039e310dd5c0ee8f6583c87f0e1e1362cbea
+# commonLabels:
+#   app.kubernetes.io/instance: buildash-react
+#   app.kubernetes.io/name: buildash-react
+# commonAnnotations:
+#   app.openshift.io/vcs-ref: 68c6039e310dd5c0ee8f6583c87f0e1e1362cbea
+#   app.openshift.io/vcs-uri: https://github.com/cloud-native-garage-method-cohort/emea-8-jiri-petnik-buildash-react
